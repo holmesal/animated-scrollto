@@ -20,6 +20,9 @@ button.addEventListener('click', function () {
         10000, // duration in ms
         function() { // callback function that runs after the animation (optional)
           console.log('done!')
+        },
+        function() { // callback function that runs if a user scroll cancels the animation (optional)
+          console.log('cancelled!')
         }
     );
 });
