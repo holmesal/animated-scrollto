@@ -13,10 +13,16 @@
             change = to - start,
             animationStart = +new Date();
         var animating = true;
+        var cancelled = false;
         var lastpos = null;
 
         var animateScroll = function() {
             if (!animating) {
+                if (cancelled) {
+                    if (cancel) { cancel(); }
+                } else {
+                    if (callback) { callback(); }
+                }
                 return;
             }
             requestAnimFrame(animateScroll);
@@ -28,7 +34,7 @@
                     element.scrollTop = val;
                 } else {
                     animating = false;
-                    if (cancel) { cancel(); }
+                    cancelled = true;
                 }
             } else {
                 lastpos = val;
@@ -37,7 +43,6 @@
             if (now > animationStart + duration || isBottomPage(element)) {
                 element.scrollTop = to;
                 animating = false;
-                if (callback) { callback(); }
             }
         };
 
